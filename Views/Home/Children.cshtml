@@ -1,0 +1,23 @@
+@model Category
+
+<div id="product">
+    <h1>@Model.Name</h1>
+    @foreach (Product item in Model.Products)
+    {
+        <div class="product_content">
+            <div class="product_item">
+                <img src="/products/@item.ImageUrl" alt="@item.Name">
+                <div class="item_title">
+                    <h4 class="title">@item.Name</h4>
+                    <p class="title">@item.Singer</p>
+                </div>
+                <div class="love">
+                    <form action="/library/add" method="post">
+                        <input type="" name="productId" value="@item.Id" hidden />
+                        <button><i class="fa fa-heart" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>

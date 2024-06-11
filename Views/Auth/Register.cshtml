@@ -1,0 +1,32 @@
+@model RegisterModel
+<div asp-validation-summary="All"></div>
+<form method="post">
+    <div class="left">
+        <div>
+            <label asp-for="Usr">Tên Đăng Nhập</label>
+            <input type="text" asp-for="Usr">
+        </div>
+        <div>
+            <label asp-for="Pwd">Mật Khẩu</label>
+            <input type="password" asp-for="Pwd">
+        </div>
+        <div>
+            <label asp-for="Eml">Email</label>
+            <input type="text" asp-for="Eml">
+        </div>
+    </div>
+    <div class="right">
+        <div>
+            <label asp-for="Fullname">Họ Tên</label>
+            <input type="text" asp-for="Fullname">
+        </div>
+        <div class="gender">
+            <label asp-for="Gen">Giới Tính: </label>
+            <select asp-for="Gen">
+                <option value="0">Nam</option>
+                <option value="1">Nữ</option>
+            </select>
+        </div>
+        <button>Đăng Ký</button>
+    </div>
+</form>

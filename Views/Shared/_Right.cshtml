@@ -1,0 +1,67 @@
+<h1>BXH Bài Hát</h1>
+<div class="tabchart">
+    <button class="tablinks border_left" onclick="openChart(event, 'VietNam')">Việt Nam</button>
+    <button class="tablinks" onclick="openChart(event, 'AuMy')">Âu Mỹ</button>
+    <button class="tablinks border_right" onclick="openChart(event, 'NhatBan')">Nhật Bản</button>
+</div>
+<div id="VietNam" class="tabcontent" style="display: block;">
+    <div class="tab_item">
+        <h2>1</h2>
+        <div class="tabtitle">
+            <h4>Dạ Vũ</h4>
+            <p>Tăng Duy Tân</p>
+        </div>
+    </div>
+    <div class="tab_item">
+        <h2>2</h2>
+        <div class="tabtitle">
+            <h4>Dạ Vũ</h4>
+            <p>Tăng Duy Tân</p>
+        </div>
+    </div>
+    <div class="tab_item">
+        <h2>3</h2>
+        <div class="tabtitle">
+            <h4>Dạ Vũ</h4>
+            <p>Tăng Duy Tân</p>
+        </div>
+    </div>
+</div>
+
+<div id="AuMy" class="tabcontent">
+    <h2>1</h2>
+    <div class="tabtitle">
+        <h4>Dạ Vũ</h4>
+        <p>Tăng Duy Tân</p>
+    </div>
+</div>
+
+<div id="NhatBan" class="tabcontent">
+    <h2>1</h2>
+    <div class="tabtitle">
+        <h4>Dạ Vũ</h4>
+        <p>Tăng Duy Tân</p>
+    </div>
+</div>
+<div id="advertise">
+    @foreach (Banner item in ViewBag.advertisesR)
+    {
+        <img src="/slides/@item.ImageUrl" alt="@item.Name">
+    }
+</div>
+<!-- tabchart -->
+<script>
+    function openChart(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>

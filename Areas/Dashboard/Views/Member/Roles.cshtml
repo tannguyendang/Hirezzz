@@ -1,0 +1,40 @@
+@model Member
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">
+            @Model.Username
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Role</th>
+                    <th>Checked</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (RoleChecked item in ViewBag.roles)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>
+                            <input type="checkbox" @(item.Checked ? "checked" : "") value="@item.Id" name="rid" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $('input[name="rid"]').click(function () {
+        console.log($(this).val());
+        var rid = $(this).val();
+        var mid = '@Model.Id';
+        console.log(mid);
+        $.post("/dashboard/member/addrole", { 'memberId': mid, 'roleId': rid }, (d) => {
+            console.log(d);
+        });
+    });
+</script>

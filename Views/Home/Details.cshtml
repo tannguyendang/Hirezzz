@@ -1,0 +1,123 @@
+@model Product
+<div class="player">
+    <form action="/library/add" method="post">
+        <!-- Dashboard -->
+        <div class="dashboard" val="@Model.Id">
+            <input type="" name="productId" value="@Model.Id" hidden />
+            <!-- Header -->
+            <div class="head_player">
+                <h4>Now playing:</h4>
+                <h2>@Model.Name</h2>
+                <h2>@Model.Singer</h2>
+            </div>
+
+            <!-- CD -->
+            <div class="cd">
+                <div class="cd-thumb" style="background-image: url('/products/@Model.ImageUrl');">
+                </div>
+            </div>
+
+            <!-- Control -->
+            <div class="control">
+                <div class="btn btn-toggle-play">
+                    <i class="fas fa-pause icon-pause"></i>
+                    <i class="fas fa-play icon-play"></i>
+                </div>
+            </div>
+
+            <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
+
+            <audio id="audio" src="/home/show/@Model.Id"></audio>
+            <a href="/home/Down/@Model.Id"><i class="fa fa-download" aria-hidden="true"></i></a>
+            <button>add library</button>
+        </div>
+    </form>
+</div>
+<script>
+    const $$$ = document.querySelector.bind(document);
+
+    const player = $$$(".player");
+    const cd = $$$(".cd");
+    const cdThumb = $$$(".cd-thumb");
+    const audio = $$$("#audio");
+    const playBtn = $$$(".btn-toggle-play");
+    const progress = $$$("#progress");
+
+    const app = {
+        handleEvents: function () {
+            const _this = this;
+            const cdWidth = cd.offsetWidth;
+
+            // Xử lý CD quay / dừng
+            // Handle CD spins / stops
+            const cdThumbAnimate = cdThumb.animate([{ transform: "rotate(360deg)" }], {
+                duration: 10000, // 10 seconds
+                iterations: Infinity
+            });
+            cdThumbAnimate.pause();
+
+            // Xử lý khi click play
+            // Handle when click play
+            playBtn.onclick = function () {
+                if (_this.isPlaying) {
+                    audio.pause();
+                } else {
+                    audio.play();
+                }
+            };
+
+            // Khi song được play
+            // When the song is played
+            audio.onplay = function () {
+                _this.isPlaying = true;
+                player.classList.add("playing");
+                cdThumbAnimate.play();
+            };
+
+            // Khi song bị pause
+            // When the song is pause
+            audio.onpause = function () {
+                _this.isPlaying = false;
+                player.classList.remove("playing");
+                cdThumbAnimate.pause();
+            };
+
+            // Khi tiến độ bài hát thay đổi
+            // When the song progress changes
+            audio.ontimeupdate = function () {
+                if (audio.duration) {
+                    const progressPercent = Math.floor(
+                        (audio.currentTime / audio.duration) * 100
+                    );
+                    progress.value = progressPercent;
+                }
+            };
+
+            // Xử lý khi tua song
+            // Handling when seek
+            progress.onchange = function (e) {
+                const seekTime = (audio.duration / 100) * e.target.value;
+                audio.currentTime = seekTime;
+            };
+
+        },
+        start: function () {
+
+            // Lắng nghe / xử lý các sự kiện (DOM events)
+            // Listening / handling events (DOM events)
+            this.handleEvents();
+
+            // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
+            // Load the first song information into the UI when running the app
+            this.loadCurrentSong();
+
+            // Render playlist
+            this.render();
+
+            // Hiển thị trạng thái ban đầu của button repeat & random
+            // Display the initial state of the repeat & random button
+            repeatBtn.classList.toggle("active", this.isRepeat);
+        }
+    }
+    app.start();
+</script>

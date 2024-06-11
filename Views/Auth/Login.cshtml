@@ -1,0 +1,18 @@
+@model LoginModel
+<div asp-validation-summary="All"></div>
+<form method="post">
+    <div>
+        <label asp-for="Usr">Tên Đăng Nhập</label>
+        <input type="text" asp-for="Usr">
+    </div>
+    <div style="text-align: end;">
+        <label asp-for="Pwd">Mật Khẩu</label>
+        <input type="password" asp-for="Pwd">
+    </div>
+    <div class="rem">
+        <input type="checkbox" asp-for="Rem">
+        <label asp-for="Rem">Remember</label>
+        <a href="javascript:void(0)">Quên mật khẩu?</a>
+    </div>
+    <button type="submit">ĐĂNG NHẬP</button>
+</form>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["title"]</title>
+    <!-- css -->
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/play.css">
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- owl carousel -->
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <!-- jquery -->
+    <script src="/js/jquery-3.7.0.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div id="header">
+            <a href="/" id="logo"><img src="/products/logo.png" /></a>
+            <nav>
+                <ul>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/">Hirezzz</a></li>
+                    @foreach (Category item in ViewBag.Categories)
+                    {
+                        <li class="subnav">
+                            <a href="/home/parent/@item.Id">@item.Name</a>
+                            @if (item.Children != null)
+                            {
+                                <div class="subnav-content">
+                                    @foreach (var child in item.Children)
+                                    {
+                                        <a href="/home/children/@child.Id">@child.Name</a>
+                                    }
+                                </div>
+                            }
+                        </li>
+                    }
+                    <li><a href="">Tin Tức</a></li>
+                </ul>
+            </nav>
+
+            <div id="search">
+                <input type="text" placeholder="Tìm kiếm bài hát" />
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </div>
+            <div id="cart">
+                <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+            </div>
+            <div id="user">
+                <a href="javascript:void(0)" onclick="openNav()"><i class="fa fa-user" aria-hidden="true"></i></a>
+                <div id="myNav" class="overlay">
+                    <div class="overlay-content">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <h3>ĐĂNG NHẬP</h3>
+                        <div id="login">
+                            @if (User.Identity != null && User.Identity.IsAuthenticated)
+                            {
+                                <span id="xinchao">
+                                    <p>Xin chào: <span>
+                                            @User.Identity.Name
+                                        </span></p>
+                                </span>
+                                <span id="logout">
+                                    <p><a href="/auth/logout">Logout</a></p>
+                                </span>
+                                <a href="/auth/change">Đổi mật khẩu</a>
+                            }
+                            else
+                            {
+                                <form action="/auth/login" method="post">
+                                    <div>
+                                        <p>Tên Đăng Nhập</p>
+                                        <input type="text" name="Usr">
+                                    </div>
+                                    <div style="text-align: end;">
+                                        <p>Mật Khẩu</p>
+                                        <input type="password" name="Pwd">
+                                    </div>
+                                    <div class="rem">
+                                        <input type="checkbox" name="Rem">
+                                        <p asp-for="Rem">Remember</p>
+                                        <a href="javascript:void(0)">Quên mật khẩu?</a>
+                                    </div>
+                                    <button type="submit">ĐĂNG NHẬP</button>
+                                </form>
+                                <div class="register_btn">
+                                    <p>Bạn chưa có tải khoản?</p>
+                                    <div id="register">
+                                        <a href="javascript:void(0)" onclick="openNav1()">ĐĂNG KÝ NGAY</a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div id="myNav1" class="overlay">
+                    <div class="overlay-content">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav1()">&times;</a>
+                        <h3>ĐĂNG KÝ</h3>
+                        <div id="register">
+                            <form action="/auth/register" method="post">
+                                <div class="left">
+                                    <div>
+                                        <p>Tên Đăng Nhập</p>
+                                        <input type="text" name="Usr">
+                                    </div>
+                                    <div>
+                                        <p>Mật Khẩu</p>
+                                        <input type="password" name="Pwd">
+                                    </div>
+                                    <div>
+                                        <p>Email</p>
+                                        <input type="text" name="Eml">
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div>
+                                        <p>Họ Tên</p>
+                                        <input type="text" name="Fullname">
+                                    </div>
+                                    <div class="gender">
+                                        <p>Giới Tính: </p>
+                                        <select name="Gen">
+                                            <option value="0">Nam</option>
+                                            <option value="1">Nữ</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit">Đăng Ký</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="carousel">
+        <div class="content owl-carousel owl-theme">
+            @foreach (Banner item in ViewBag.slides)
+            {
+                <div class="item">
+                    <img src="/slides/@item.ImageUrl" alt="@item.Name" />
+                </div>
+            }
+        </div>
+    </section>
+    <section id="content">
+        <div id="advertise">
+            <partial name="_Left" />
+        </div>
+        @RenderBody()
+        <div id="chart_music">
+            <partial name="_Right" />
+        </div>
+    </section>
+    <!-- owl carousel -->
+    <script src="/js/owl.carousel.min.js"></script>
+    <script>
+        $('.owl-carousel').owlCarousel({
+            autoplay: true,
+            loop: true,
+            margin: 10,
+            nav: true,
+            navText: ["<img src='/slides/left-arrow.png'/>", "<img src='/slides/right-arrow.png'/>"],
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 1
+                }
+            }
+        })
+    </script>
+    <!-- login -->
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.display = "block";
+        }
+
+        function closeNav() {
+            document.getElementById("myNav").style.display = "none";
+        }
+    </script>
+    <!-- register -->
+    <script>
+        function openNav1() {
+            document.getElementById("myNav").style.display = "none";
+            document.getElementById("myNav1").style.display = "block";
+        }
+        function closeNav1() {
+            document.getElementById("myNav1").style.display = "none";
+        }
+    </script>
+</body>
+
+</html>

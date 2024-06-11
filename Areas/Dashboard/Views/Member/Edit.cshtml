@@ -1,0 +1,32 @@
+@model Member
+<form method="post" class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div>
+            <label>Tên đăng nhập</label>
+            <input type="text" name="username" value="@Model.Username" />
+        </div>
+        <div>
+            <label>Email</label>
+            <input type="text" name="email" value="@Model.Email" />
+        </div>
+        <div>
+            <label>Họ tên</label>
+            <input type="text" name="fullname" value="@Model.Fullname" />
+        </div>
+        <div>
+            <label>Giới tính: </label>
+            <select name="Gender">
+                <option value="0">Nam</option>
+                <option value="1">Nữ</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-primary">Save changes</button>
+    </div>
+</form>

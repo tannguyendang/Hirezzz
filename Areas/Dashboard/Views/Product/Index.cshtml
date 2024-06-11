@@ -1,0 +1,104 @@
+@model List<Product>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post" action="/dashboard/product/add" class="modal-content" enctype="multipart/form-data">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label>CategoryId</label>
+                    <select name="categoryId">
+                        <option value="4">EDM</option>
+                        <option value="5">Rock</option>
+                        <option value="6">Pop</option>
+                        <option value="7">Instrumental</option>
+                        <option value="8">Legendary</option>
+                        <option value="9">Việt Nam</option>
+                        <option value="10">Âu Mỹ</option>
+                        <option value="11">Nhật Bản</option>
+                        <option value="12">MV</option>
+                        <option value="13">Movie</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Name</label>
+                    <input type="text" name="name" />
+                </div>
+                <div>
+                    <label>Type: </label>
+                    <select name="productTypeId">
+                        <option value="1">Music</option>
+                        <option value="2">Video</option>
+                    </select>
+                </div>
+                <div>
+                    <label>ProductUrl</label>
+                    <input type="file" name="m" accept="music/*" />
+                </div>
+                <div>
+                    <label>Singer</label>
+                    <input type="text" name="singer" />
+                </div>
+                <div>
+                    <label>Country: </label>
+                    <select name="countryId">
+                        <option value="1">Việt Nam</option>
+                        <option value="2">Âu Mỹ</option>
+                        <option value="2">Nhật Bản</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Image</label>
+                    <input type="file" name="f" accept="image/*" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <td>CategoryId</td>
+            <td>Id</td>
+            <td>Name</td>
+            <th>Type</th>
+            <th>Url</th>
+            <th>Singer</th>
+            <th>Country</th>
+            <th>Image</th>
+            <th>Delete</th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr val="@item.Id">
+                <td>@item.CategoryId</td>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <th>@item.ProductTypeId</th>
+                <th>@item.ProductUrl</th>
+                <th>@item.Singer</th>
+                <th>@item.CountryId</th>
+                <th>@item.ImageUrl</th>
+                <td>
+                    <a href="/dashboard/product/delete/@item.Id"><i class="fa-sharp fa fa-trash"></i></a>
+                </td>
+                <td>
+                    <a href="/dashboard/category/edit/@item.Id"><i class="fa-sharp fa fa-wrench"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

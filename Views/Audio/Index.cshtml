@@ -1,0 +1,20 @@
+@model List<Product>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Detail</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>
+                    <a href="/audio/detail/@item.Id">Detail</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,25 @@
+@model Category
+@foreach (Category obj in Model.Children)
+{
+    if (obj.Products != null && obj.Products.Count > 0)
+    {
+        <div id="product">
+            <h1>@obj.Name</h1>
+            <div class="product_content">
+                <div class="product_item">
+                    @foreach (Product item in obj.Products)
+                    {
+                        <img src="/products/@item.ImageUrl" alt="@item.Name">
+                        <div class="item_title">
+                            <h4 class="title">@item.Name</h4>
+                            <p class="title">@item.Singer</p>
+                        </div>
+                        <div class="love">
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}
